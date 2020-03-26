@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@model RSSReader.Models.NewsListViewModel
+
+<div class="new">
+    <h1>Новостная лента</h1>
+</div>
+
+<form method="get">
+    <div class="form-inline">
+        <label class="control-label">Источник ленты: </label>
+        @Html.DropDownList("sourceName", Model.FilterViewModel.Sources as SelectList,
+                    htmlAttributes: new { @class = "form-control" })
+        <br />
+        @Html.RadioButton("sortOrder", "Name", true, new { sortOrder = Model.SortViewModel.NameSort })
+        <span>Сортировать по источнику</span>
+        <br />
+        @Html.RadioButton("sortOrder", "Date", new { sortOrder = Model.SortViewModel.DateSort })
+        <span>Сортировать по дате</span> 
+        <br />
+        <input type="submit" value="Показать" class="btn btn-default" />
+    </div>
+</form>
+
+<table class="table">
+    <tr>
+        <th>
+            <p>Источник</p>
+        </th>
+        <th>
+            <p>Ссылка</p>
+        </th>
+        <th>
+            <p>Заголовок</p>
+        </th>
+        <th>
+            <p>Дата публикации</p>
+        </th>
+    </tr>
+    @foreach (var item in Model.News)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Source)
+            </td>
+            <td>
+                <a href="@item.Name" target="_blank">Источник</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublicationTime)
+            </td>
+        </tr>
+    }
+</table>
+
+@if (Model.PageViewModel.HasPreviousPage)
+{
+    <i class="glyphicon glyphicon-chevron-left"></i>
+    @Html.RouteLink("Назад", new
+    {
+        controller = "Home",
+          action = "Index",
+          page = Model.PageViewModel.PageNumber - 1,
+          sourceName = Model.FilterViewModel.SelectedName,
+          sortOrder = Model.SortViewModel.Current
+    }, new { @class = "btn btn-default" })
+}
+
+@if (Model.PageViewModel.HasNextPage)
+{
+
+    @Html.RouteLink("Вперед", new
+    {
+        controller = "Home",
+          action = "Index",
+          page = Model.PageViewModel.PageNumber + 1,
+          sourceName = Model.FilterViewModel.SelectedName,
+          sortOrder = Model.SortViewModel.Current
+    }, new { @class = "btn btn-default" })
+    <i class="glyphicon glyphicon-chevron-right"></i>
+}

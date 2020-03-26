@@ -1,0 +1,33 @@
+﻿<table class="table">
+    <tr>
+        <th>
+            Источник
+        </th>
+        <th>
+            Имя
+        </th>
+        <th>
+            Описание
+        </th>
+        <th>
+            Дата
+        </th>
+    </tr>
+    @foreach (var item in ViewBag.RSSFeedData)
+    {
+        <tr>
+            <td>
+                @item.Source;
+            </td>
+            <td>
+                @item.Name;
+            </td>
+            <td>
+                @item.Description;
+            </td>
+            <td>
+                @item.PublicationTime;
+            </td>
+        </tr>
+    }
+</table>
