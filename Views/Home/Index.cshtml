@@ -18,11 +18,22 @@
         <span>Сортировать по источнику</span>
         <br />
         @Html.RadioButton("sortOrder", "Date", new { sortOrder = Model.SortViewModel.DateSort })
-        <span>Сортировать по дате</span> 
+        <span>Сортировать по дате</span>
+        <br />
+        <br />
+        <span>
+            Новостей всего: @ViewBag.NewsSum
+        </span>
+        <span>
+            Добавлено новостей: @ViewBag.NewsAdded
+        </span>
+        <br />
         <br />
         <input type="submit" value="Показать" class="btn btn-default" />
     </div>
 </form>
+
+    
 
 <table class="table">
     <tr>

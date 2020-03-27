@@ -15,10 +15,12 @@ namespace RSSReader.Controllers
         public ActionResult Index(int page=1, string sourceName="Все", SortState sortOrder = SortState.Name)
         {
             int pageSize = 10;
-
+            int newsBefore = db.News.Count();
             NewsUpdate.Update(db, db.Sources.Find(1));
             NewsUpdate.Update(db, db.Sources.Find(2));
-
+            int newsUpdated = db.News.Count();
+            ViewBag.NewsAdded = newsUpdated - newsBefore;
+            ViewBag.NewsSum = newsUpdated;
             IQueryable<News> news = db.News.Include(p => p.SourceObj);
             if (!String.IsNullOrEmpty(sourceName) && !sourceName.Equals("Все"))
             {
